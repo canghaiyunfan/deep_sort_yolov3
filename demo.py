@@ -38,11 +38,14 @@ def main(yolo):
     
     #video_capture = cv2.VideoCapture(0)
     video_capture = cv2.VideoCapture('video/Pedestrian overpass.mp4')
+    if not video_capture.isOpened():
+        raise IOError("Couldn't open webcam or video")
 
     if writeVideo_flag:
     # Define the codec and create VideoWriter object
         w = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
         h = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        #视频编解码器
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 
         video_fps = video_capture.get(cv2.CAP_PROP_FPS)
@@ -110,6 +113,8 @@ def main(yolo):
         out.release()
         list_file.close()
     cv2.destroyAllWindows()
+    yolo.close_session()
+    print("Finished")
 
 if __name__ == '__main__':
     main(YOLO())
