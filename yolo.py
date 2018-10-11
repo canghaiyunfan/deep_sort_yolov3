@@ -27,6 +27,7 @@ class YOLO(object):
         self.iou = 0.5
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
+        K.clear_session()
         self.sess = K.get_session()
         self.model_image_size = (416, 416) # fixed size or (None, None)
         self.is_fixed_size = self.model_image_size != (None, None)
