@@ -41,10 +41,12 @@ def main(yolo):
 
     if writeVideo_flag:
     # Define the codec and create VideoWriter object
-        w = int(video_capture.get(3))
-        h = int(video_capture.get(4))
+        w = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+        h = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-        out = cv2.VideoWriter('output1.avi', fourcc, 15, (w, h))
+
+        video_fps = video_capture.get(cv2.CAP_PROP_FPS)
+        out = cv2.VideoWriter('output1.avi', fourcc, video_fps, (w, h))
         list_file = open('detection.txt', 'w')
         frame_index = -1 
         
@@ -84,7 +86,7 @@ def main(yolo):
             bbox = det.to_tlbr()
             cv2.rectangle(frame,(int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])),(255,0,0), 2)
             
-        cv2.imshow('', frame)
+        #cv2.imshow('', frame)
         
         if writeVideo_flag:
             # save a frame
